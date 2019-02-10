@@ -93,10 +93,27 @@ ORDER BY name
 
 
 -- Q3 returns (name)
-
+SELECT name 
+FROM person AS mother
+WHERE NOT EXISTS (SELECT gender FROM person EXCEPT SELECT gender FROM person WHERE mother.name=person.mother)
+ORDER BY name
 ;
 
+       name        
+-------------------
+ Alexandra (Queen)
+ Elizabeth II
+ Henrietta Maria
+ Victoria
+(4 rows)
+
+
 -- Q4 returns (name,father,mother)
+SELECT name,father,mother
+FROM person 
+WHERE name IN (SELECT person.name FROM person AS sibling WHERE person.mother =sibling.mother AND person.father = sibling.father)
+ORDER BY father
+
 
 ;
 
